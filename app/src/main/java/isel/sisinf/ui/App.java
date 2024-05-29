@@ -23,17 +23,21 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
+
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.HashMap;
 
-interface DbWorker
-{
+interface DbWorker {
     void doWork();
 }
-class UI
-{
-    private enum Option
-    {
+
+class UI {
+    private enum Option {
         // DO NOT CHANGE ANYTHING!
         Unknown,
         Exit,
@@ -45,40 +49,52 @@ class UI
         cancelBooking,
         about
     }
-    private static UI __instance = null;
-  
-    private HashMap<Option,DbWorker> __dbMethods;
 
-    private UI()
-    {
+    private static UI __instance = null;
+
+    private HashMap<Option, DbWorker> __dbMethods;
+
+    private UI() {
         // DO NOT CHANGE ANYTHING!
-        __dbMethods = new HashMap<Option,DbWorker>();
+        __dbMethods = new HashMap<Option, DbWorker>();
         __dbMethods.put(Option.createCostumer, () -> UI.this.createCostumer());
-        __dbMethods.put(Option.listExistingBikes, () -> UI.this.listExistingBikes()); 
+        __dbMethods.put(Option.listExistingBikes, () -> UI.this.listExistingBikes());
         __dbMethods.put(Option.checkBikeAvailability, () -> UI.this.checkBikeAvailability());
-        __dbMethods.put(Option.obtainBookings, new DbWorker() {public void doWork() {UI.this.obtainBookings();}});
-        __dbMethods.put(Option.makeBooking, new DbWorker() {public void doWork() {UI.this.makeBooking();}});
-        __dbMethods.put(Option.cancelBooking, new DbWorker() {public void doWork() {UI.this.cancelBooking();}});
-        __dbMethods.put(Option.about, new DbWorker() {public void doWork() {UI.this.about();}});
+        __dbMethods.put(Option.obtainBookings, new DbWorker() {
+            public void doWork() {
+                UI.this.obtainBookings();
+            }
+        });
+        __dbMethods.put(Option.makeBooking, new DbWorker() {
+            public void doWork() {
+                UI.this.makeBooking();
+            }
+        });
+        __dbMethods.put(Option.cancelBooking, new DbWorker() {
+            public void doWork() {
+                UI.this.cancelBooking();
+            }
+        });
+        __dbMethods.put(Option.about, new DbWorker() {
+            public void doWork() {
+                UI.this.about();
+            }
+        });
 
     }
 
-    public static UI getInstance()
-    {
+    public static UI getInstance() {
         // DO NOT CHANGE ANYTHING!
-        if(__instance == null)
-        {
+        if (__instance == null) {
             __instance = new UI();
         }
         return __instance;
     }
 
-    private Option DisplayMenu()
-    {
+    private Option DisplayMenu() {
         Option option = Option.Unknown;
         Scanner s = new Scanner(System.in);
-        try
-        {
+        try {
             // DO NOT CHANGE ANYTHING!
             System.out.println("Bicycle reservation");
             System.out.println();
@@ -94,72 +110,95 @@ class UI
             s = new Scanner(System.in);
             int result = s.nextInt();
             option = Option.values()[result];
-        }
-        catch(RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             //nothing to do.
-        }
-        finally
-        {
+        } finally {
             s.close();
         }
         return option;
 
     }
-    private static void clearConsole() throws Exception
-    {
+
+    private static void clearConsole() throws Exception {
         // DO NOT CHANGE ANYTHING!
         for (int y = 0; y < 25; y++) //console is 80 columns and 25 lines
             System.out.println("\n");
     }
 
-    public void Run() throws Exception
-    {
+    public void Run() throws Exception {
         // DO NOT CHANGE ANYTHING!
         Option userInput;
-        do
-        {
+        do {
             clearConsole();
             userInput = DisplayMenu();
             clearConsole();
-            try
-            {
+            try {
                 __dbMethods.get(userInput).doWork();
                 System.in.read();
-            }
-            catch(NullPointerException ex)
-            {
+            } catch (NullPointerException ex) {
                 //Nothing to do. The option was not a valid one. Read another.
             }
 
-        }while(userInput!=Option.Exit);
+        } while (userInput != Option.Exit);
     }
 
     /**
-    To implement from this point forward. Do not need to change the code above.
-    -------------------------------------------------------------------------------     
-        IMPORTANT:
-    --- DO NOT MOVE IN THE CODE ABOVE. JUST HAVE TO IMPLEMENT THE METHODS BELOW ---
-    --- Other Methods and properties can be added to support implementation -------
-    -------------------------------------------------------------------------------
-    
-    */
+     * To implement from this point forward. Do not need to change the code above.
+     * -------------------------------------------------------------------------------
+     * IMPORTANT:
+     * --- DO NOT MOVE IN THE CODE ABOVE. JUST HAVE TO IMPLEMENT THE METHODS BELOW ---
+     * --- Other Methods and properties can be added to support implementation -------
+     * -------------------------------------------------------------------------------
+     */
 
     private static final int TAB_SIZE = 24;
 
     private void createCostumer() {
         // TODO
         System.out.println("createCostumer()");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bicyclePU");
+        EntityManager em = emf.createEntityManager();
+        try {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Name:");
+            String name = s.nextLine();
+            System.out.println("Address:");
+            String address = s.nextLine();
+            System.out.println("Email:");
+            String email = s.nextLine();
+            System.out.println("Phone:");
+            String phone = s.nextLine();
+            System.out.println("CC:");
+            String cc = s.nextLine();
+            System.out.println("Nationality");
+            String nationality = s.nextLine();
+
+            String sql = "call createCostumer(?1, ?2, ?3, ?4, ?5, ?6)";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter(1, name);
+            query.setParameter(2, address);
+            query.setParameter(3, email);
+            query.setParameter(4, phone);
+            query.setParameter(5, cc);
+            query.setParameter(6, nationality);
+            query.executeUpdate();
+            em.getTransaction().commit();
+            System.out.printf("Costumer %s created successfully\n", name);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
     }
-  
-    private void listExistingBikes()
-    {
+
+    private void listExistingBikes() {
         // TODO
         System.out.println("listExistingBikes()");
     }
 
-    private void checkBikeAvailability()
-    {
+    private void checkBikeAvailability() {
         // TODO
         System.out.println("checkBikeAvailability()");
 
@@ -170,30 +209,28 @@ class UI
         System.out.println("obtainBookings()");
     }
 
-    private void makeBooking()
-    {
+    private void makeBooking() {
         // TODO
         System.out.println("makeBooking()");
-        
+
     }
 
-    private void cancelBooking()
-    {
+    private void cancelBooking() {
         // TODO
         System.out.println("cancelBooking");
-        
+
     }
-    private void about()
-    {
+
+    private void about() {
         // TODO: Add your Group ID & member names
-        System.out.println("DAL version:"+ isel.sisinf.jpa.Dal.version());
-        System.out.println("Core version:"+ isel.sisinf.model.Core.version());
-        
+        System.out.println("DAL version:" + isel.sisinf.jpa.Dal.version());
+        System.out.println("Core version:" + isel.sisinf.model.Core.version());
+
     }
 }
 
-public class App{
-    public static void main(String[] args) throws Exception{
+public class App {
+    public static void main(String[] args) throws Exception {
         UI.getInstance().Run();
     }
 }
