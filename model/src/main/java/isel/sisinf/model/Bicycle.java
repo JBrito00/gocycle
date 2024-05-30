@@ -47,65 +47,23 @@ public class Bicycle implements IBicycle {
     @Column
     private Integer maxSpeed;
 
-    @Override
-    public int getId() {
-        return bicycleId;
-    }
+    public int getId() {return bicycleId;}
+    public void setId(int id) {this.bicycleId = id;}
 
-    @Override
-    public void setId(int id) {
-        this.bicycleId = id;
-    }
+    public String getModel() {return model;}
+    public void setModel(String name) {this.model = name;}
 
-    @Override
-    public String getModel() {
-        return model;
-    }
+    public double getWeight() {return weight;}
+    public void setWeight(double weight) {this.weight = weight;}
 
-    @Override
-    public void setModel(String name) {
-        this.model = name;
-    }
+    public String getBrand() {return brand;}
+    public void setBrand(String brand) {this.brand = brand;}
 
-    @Override
-    public double getWeight() {
-        return weight;
-    }
+    public GearSystem getGearSystem() {return gearSystem;}
+    public void setGearSystem(GearSystem gearSystem) {this.gearSystem = gearSystem;}
 
-    @Override
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    @Override
-    public String getBrand() {
-        return brand;
-    }
-
-    @Override
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    @Override
-    public GearSystem getGearSystem() {
-        return gearSystem;
-    }
-
-    @Override
-    public void setGearSystem(GearSystem gearSystem) {
-        this.gearSystem = gearSystem;
-    }
-
-    @Override
-    public Status getStatus() {
-        return status;
-    }
-
-    @Override
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public Status getStatus() {return status;}
+    public void setStatus(Status status) {this.status = status;}
 }
 
 

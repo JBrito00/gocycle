@@ -14,6 +14,6 @@ public interface ICostumer
     public void setPhone(String phone);
     public String getEmail();
     public void setEmail(String email);
-    public int getNationality();
-    public void setNationality(int nationality);
+    public String getNationality();
+    public void setNationality(String nationality);
 }

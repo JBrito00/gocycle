@@ -2,17 +2,15 @@ package isel.sisinf.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
-@Table(name = "Reservation")
-public class Reservation {
+@NamedQuery(name = "Reservation.findByKey",
+            query = "SELECT r FROM Reservation r WHERE r.reservationNumber =:key")
+public class Reservation implements IReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "id", unique = true, nullable = false)
-    private String reservationNumber;
+    private int reservationNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "startDate")
@@ -23,9 +21,8 @@ public class Reservation {
     private Date endDate;
 
     @MapsId("bicycle_id")
-    @ManyToOne
     @JoinColumn(name = "bicycle_id", nullable = false)
-    private Bicycle bicycle;
+    private int bicycle;
 
     @MapsId("customer_id")
     @ManyToOne
@@ -35,4 +32,18 @@ public class Reservation {
     @Column(name = "price")
     private double price;
 
+    public int getNumber() {return reservationNumber;}
+    public void setNumber(int number) {this.reservationNumber = number;}
+
+    public int getBicycle() {return bicycle;}
+    public void setBicycle(int bicycle) {this.bicycle = bicycle;}
+
+    public double getPrice() {return price;}
+    public void setPrice(double price) {this.price = price;}
+
+    public Date getBeginingDate(){return startDate;}
+    public void setBeginingDate(Date beginingDate) {this.startDate = beginingDate;}
+
+    public Date getEndingDate(){return endDate;}
+    public void setEndingDate(Date endingDate) {this.endDate = endingDate;}
 }

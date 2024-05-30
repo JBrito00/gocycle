@@ -2,8 +2,8 @@ package isel.sisinf.model;
 
 public interface IShop
 {
-    public String getCode();
-    public void setCode(String code);
+    public int getCode();
+    public void setCode(int code);
     public String getAddress();
     public void setAddress(String address);
     public String getEmail();
