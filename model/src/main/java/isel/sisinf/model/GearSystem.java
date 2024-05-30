@@ -1,22 +1,14 @@
 package isel.sisinf.model;
 
-import jakarta.persistence.*;
+public enum GearSystem {
+    UMA(1),
+    SEIS(6),
+    DEZOITO(18),
+    VINTE_QUATRO(24);
 
-import java.util.List;
+    private final int gearSystem;
 
-public class GearSystem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false)
-    private int numberOgGears;
-
-    @Column(nullable = false)
-    private String description;
-
-    @OneToMany(mappedBy = "gearSystem")
-    private List<Bicycle> bicycles;
-
-
+    GearSystem(int value) {
+        this.gearSystem = value;
+    }
 }
