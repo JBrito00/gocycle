@@ -1,20 +1,20 @@
 package isel.sisinf.model.repo;
 
-import isel.sisinf.model.Bicycle;
+import isel.sisinf.model.Shop;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class BicycleDataMapper{
+public class ShopDataMapper {
     private EntityManager entityManager;
 
-    public BicycleDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Bicycle").createEntityManager();
+    public ShopDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Shop").createEntityManager();
     }
 
-    public void create(Bicycle bicycle) {
+    public void create(Shop shop) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(bicycle);
+            entityManager.persist(shop);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -23,10 +23,10 @@ public class BicycleDataMapper{
         }
     }
 
-    public void update(Bicycle bicycle) {
+    public void update(Shop shop) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(bicycle);
+            entityManager.merge(shop);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -34,13 +34,12 @@ public class BicycleDataMapper{
             throw e;
         }
     }
-
-    public void delete(Bicycle bicycle) {
+    public void delete(Shop shop) {
         try {
-            Bicycle b = entityManager.find(Bicycle.class, bicycle.getId());
-            if (b != null) {
+            Shop s = entityManager.find(Shop.class, shop.getCode());
+            if (s != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(b);
+                entityManager.remove(s);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {

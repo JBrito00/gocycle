@@ -1,20 +1,20 @@
 package isel.sisinf.model.repo;
 
-import isel.sisinf.model.Bicycle;
+import isel.sisinf.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class BicycleDataMapper{
+public class ReservationDataMapper {
     private EntityManager entityManager;
 
-    public BicycleDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Bicycle").createEntityManager();
+    public ReservationDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Reservation").createEntityManager();
     }
 
-    public void create(Bicycle bicycle) {
+    public void create(Reservation reservation) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(bicycle);
+            entityManager.persist(reservation);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -23,10 +23,10 @@ public class BicycleDataMapper{
         }
     }
 
-    public void update(Bicycle bicycle) {
+    public void update(Reservation reservation) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(bicycle);
+            entityManager.merge(reservation);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -34,13 +34,12 @@ public class BicycleDataMapper{
             throw e;
         }
     }
-
-    public void delete(Bicycle bicycle) {
+    public void delete(Reservation reservation) {
         try {
-            Bicycle b = entityManager.find(Bicycle.class, bicycle.getId());
-            if (b != null) {
+            Reservation r = entityManager.find(Reservation.class, reservation.getNumber());
+            if (r != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(b);
+                entityManager.remove(r);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {
