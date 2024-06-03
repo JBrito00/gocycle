@@ -4,7 +4,7 @@ import isel.sisinf.model.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class CustomerDataMapper {
+public class CustomerDataMapper implements IDataMapper<Customer>{
     private EntityManager entityManager;
 
     public CustomerDataMapper() {

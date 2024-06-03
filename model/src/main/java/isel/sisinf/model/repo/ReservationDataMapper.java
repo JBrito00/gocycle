@@ -4,7 +4,7 @@ import isel.sisinf.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class ReservationDataMapper {
+public class ReservationDataMapper implements IDataMapper<Reservation> {
     private EntityManager entityManager;
 
     public ReservationDataMapper() {

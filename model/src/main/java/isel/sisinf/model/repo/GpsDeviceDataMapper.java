@@ -1,14 +1,13 @@
 package isel.sisinf.model.repo;
 
-import isel.sisinf.model.GearSystem;
 import isel.sisinf.model.GpsDevice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class GpsSystemDataMapper {
+public class GpsDeviceDataMapper implements IDataMapper<GpsDevice>{
     private EntityManager entityManager;
 
-    public GpsSystemDataMapper() {
+    public GpsDeviceDataMapper() {
         this.entityManager = Persistence.createEntityManagerFactory("GpsSystem").createEntityManager();
     }
 

@@ -4,7 +4,7 @@ import isel.sisinf.model.Bicycle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class BicycleDataMapper{
+public class BicycleDataMapper implements IDataMapper<Bicycle>{
     private EntityManager entityManager;
 
     public BicycleDataMapper() {
