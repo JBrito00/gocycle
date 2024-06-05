@@ -23,11 +23,17 @@ SOFTWARE.
 */
 package isel.sisinf.ui;
 
+import isel.sisinf.model.Bicycle;
+import isel.sisinf.model.Reservation;
+//import isel.sisinf.model.procedures.MakeBooking;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 
+import java.sql.Connection;
+//import java.sql.SQLException;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -156,7 +162,7 @@ class UI {
     private void createCostumer() {
         // TODO
         System.out.println("createCostumer()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bicyclePU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
         try {
             Scanner s = new Scanner(System.in);
@@ -196,22 +202,109 @@ class UI {
     private void listExistingBikes() {
         // TODO
         System.out.println("listExistingBikes()");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
+        EntityManager em = emf.createEntityManager();
+        try {
+            // em.getTransaction().begin();
+            String sql = "SELECT * FROM Bicycle";
+            Query query = em.createNativeQuery(sql);
+            List<Bicycle> result = query.getResultList();
+            System.out.println("Bicycle List");
+            System.out.println("ID\tModel");
+            for (Bicycle b : result) {
+                System.out.printf("%d\t%s\n", b.getId(), b.getModel());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
     }
 
     private void checkBikeAvailability() {
         // TODO
         System.out.println("checkBikeAvailability()");
+        //Verificar a disponibilidade de uma bicicleta num momento no tempo (têm de usar uma função)
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
+        EntityManager em = emf.createEntityManager();
+        try {
+            Scanner s = new Scanner(System.in);
+            System.out.println("Bike ID:");
+            int bikeId = s.nextInt();
+            String sql = "SELECT * FROM Bicycle WHERE bicycleId = ?1";
+            Query query = em.createNativeQuery(sql);
+            query.setParameter(1, bikeId);
+            List<Bicycle> result = query.getResultList();
+            if (result.isEmpty()) {
+                System.out.println("Bike not found");
+            } else {
+                Bicycle b = result.get(0);
+                System.out.printf("Bike %d is %s\n", b.getId(), b.getStatus());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
 
     }
 
     private void obtainBookings() {
         // TODO
         System.out.println("obtainBookings()");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
+        EntityManager em = emf.createEntityManager();
+        try {
+            String sql = "SELECT * FROM Reservation";
+            Query query = em.createNativeQuery(sql);
+            List<Reservation> result = query.getResultList();
+            System.out.println("Reservation List");
+            System.out.println("ID\tBicycle\tStart\tEnd\tPrice");
+            for (Reservation r : result) {
+                System.out.printf("%d\t%s\t%s\t%s\t%.2f\n", r.getNumber(), r.getBicycle(), r.getBeginingDate(), r.getEndingDate(), r.getPrice());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            em.close();
+            emf.close();
+        }
+
+
     }
 
     private void makeBooking() {
         // TODO
-        System.out.println("makeBooking()");
+//        System.out.println("makeBooking()");
+//        //Make a reservation (it has to use a stored procedure)
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            Scanner s = new Scanner(System.in);
+//            System.out.println("Booking ID:");
+//            int bookingId = s.nextInt();
+//            System.out.println("Customer ID:");
+//            int customerId = s.nextInt();
+//            System.out.println("Bike ID:");
+//            int bikeId = s.nextInt();
+//            System.out.println("Start Date:");
+//            String startDateTime = s.nextLine();
+//            System.out.println("End Date:");
+//            String endDateTime = s.nextLine();
+//            System.out.println("Price:");
+//            double price = s.nextDouble();
+//            new MakeBooking().makeBooking(bookingId, customerId, bikeId, startDateTime, endDateTime, price);
+//            System.out.println("Booking created successfully");
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            throw e;
+//        } finally {
+//            em.close();
+//            emf.close();
+//        }
 
     }
 

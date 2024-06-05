@@ -1,10 +1,11 @@
-package isel.sisinf.model.repo;
+package isel.sisinf.jpa;
 
+import isel.sisinf.jpa.genericInterfaces.IDataMapper;
 import isel.sisinf.model.Shop;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class ShopDataMapper implements IDataMapper<Shop>{
+public class ShopDataMapper implements IDataMapper<Shop> {
     private EntityManager entityManager;
 
     public ShopDataMapper() {

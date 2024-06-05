@@ -1,20 +1,21 @@
-package isel.sisinf.model.repo;
+package isel.sisinf.jpa;
 
-import isel.sisinf.model.Bicycle;
+import isel.sisinf.jpa.genericInterfaces.IDataMapper;
+import isel.sisinf.model.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class BicycleDataMapper implements IDataMapper<Bicycle>{
+public class CustomerDataMapper implements IDataMapper<Customer> {
     private EntityManager entityManager;
 
-    public BicycleDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Bicycle").createEntityManager();
+    public CustomerDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Customers").createEntityManager();
     }
 
-    public void create(Bicycle bicycle) {
+    public void create(Customer customer) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(bicycle);
+            entityManager.persist(customer);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -23,10 +24,10 @@ public class BicycleDataMapper implements IDataMapper<Bicycle>{
         }
     }
 
-    public void update(Bicycle bicycle) {
+    public void update(Customer customer) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(bicycle);
+            entityManager.merge(customer);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -34,13 +35,12 @@ public class BicycleDataMapper implements IDataMapper<Bicycle>{
             throw e;
         }
     }
-
-    public void delete(Bicycle bicycle) {
+    public void delete(Customer customer) {
         try {
-            Bicycle b = entityManager.find(Bicycle.class, bicycle.getId());
-            if (b != null) {
+            Customer c = entityManager.find(Customer.class, customer.getId());
+            if (c != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(b);
+                entityManager.remove(c);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {

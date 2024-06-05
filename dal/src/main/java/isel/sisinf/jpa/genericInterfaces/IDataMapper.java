@@ -1,4 +1,4 @@
-package isel.sisinf.model.repo;
+package isel.sisinf.jpa.genericInterfaces;
 
 public interface IDataMapper<T>
 {

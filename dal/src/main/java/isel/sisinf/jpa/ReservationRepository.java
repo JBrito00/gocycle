@@ -1,5 +1,6 @@
-package isel.sisinf.model.repo;
+package isel.sisinf.jpa;
 
+import isel.sisinf.jpa.genericInterfaces.IRepository;
 import isel.sisinf.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
