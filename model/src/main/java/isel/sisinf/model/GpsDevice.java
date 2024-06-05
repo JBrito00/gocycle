@@ -1,10 +1,11 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.repo.interfaces.IGPS;
 import jakarta.persistence.*;
 
 @Entity
 @NamedQuery(name = "GpsDevice.findByKey", query = "SELECT g FROM GpsDevice g")
-public class GpsDevice implements IGPS{
+public class GpsDevice implements IGPS {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int number;

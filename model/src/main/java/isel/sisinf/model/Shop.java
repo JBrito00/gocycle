@@ -1,12 +1,13 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.repo.interfaces.IShop;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @NamedQuery(name = "Shop.findByKey",
             query = "SELECT s FROM Shop s WHERE s.shopCode =:key")
-public class Shop implements IShop{
+public class Shop implements IShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shopCode;

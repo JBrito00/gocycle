@@ -1,4 +1,4 @@
-package isel.sisinf.model;
+package isel.sisinf.model.repo.interfaces;
 
 public interface IGPS
 {

@@ -1,4 +1,7 @@
-package isel.sisinf.model;
+package isel.sisinf.model.repo.interfaces;
+
+import isel.sisinf.model.GearSystem;
+import isel.sisinf.model.Status;
 
 public interface IBicycle
 {

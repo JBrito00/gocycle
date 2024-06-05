@@ -1,12 +1,13 @@
 package isel.sisinf.model;
 
+import isel.sisinf.model.repo.interfaces.ICostumer;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "Customer")
 @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
-public class Customer implements ICostumer{
+public class Customer implements ICostumer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int customerId;
