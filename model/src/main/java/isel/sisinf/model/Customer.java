@@ -42,6 +42,8 @@ public class Customer implements ICostumer {
         this.nationality = nationality;
     }
 
+    public Customer() {}
+
     public int getId() {return customerId;}
     public void setId(int id) {this.customerId = id;}
 

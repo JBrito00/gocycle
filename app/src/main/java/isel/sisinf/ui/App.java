@@ -152,7 +152,6 @@ class UI {
      */
 
     private void createCustomer() {
-
         System.out.println("createCustomer()");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
