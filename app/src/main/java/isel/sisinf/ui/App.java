@@ -153,8 +153,6 @@ class UI {
 
     private void createCustomer() {
         System.out.println("createCustomer()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
         Scanner scanner = new Scanner(System.in);
 
         try {
@@ -170,24 +168,18 @@ class UI {
             String cc = scanner.nextLine();
             System.out.println("Nationality:");
             String nationality = scanner.nextLine();
-            Customer customer = new Customer(name, address, email, phone, cc, nationality);
-            new Service(em).createCustomer(customer);
+            new ServiceWithSQL().createCustomer(name, address, email, phone, cc, nationality);
             System.out.println("Customer created successfully");
         } catch (Exception e) {
             e.printStackTrace(); // Melhor para depuração do que System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     private void listExistingBikes() {
         System.out.println("listExistingBikes()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
 
         try {
-            List<Bicycle> result = new Service(em).listExistingBikes();
+            List<Bicycle> result = new ServiceWithSQL().listExistingBikes();
             System.out.println("Bicycle List");
             System.out.println("ID\tModel");
             for (Bicycle b : result) {
@@ -195,43 +187,33 @@ class UI {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     private void checkBikeAvailability() {
         System.out.println("checkBikeAvailability()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
         Scanner s = new Scanner(System.in);
 
         try {
             System.out.println("Bike ID:");
             int bikeId = s.nextInt();
-            Bicycle result = new Service(em).checkBikeAvailability(bikeId);
+            List<Bicycle> result = new ServiceWithSQL().checkBikeAvailability(bikeId);
             if (result == null) {
                 System.out.println("Bike not found");
             } else {
-                Bicycle b = result;
+                Bicycle b = result.get(0);
                 System.out.printf("Bike %d is %s\n", b.getId(), b.getStatus());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     private void obtainBookings() {
         System.out.println("obtainBookings()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
 
         try {
-            List<Reservation> result = new Service(em).obtainBookings();
+            List<Reservation> result = new ServiceWithSQL().obtainBookings();
             System.out.println("Reservation List");
             System.out.println("ID\tBicycle\tStart\tEnd\tPrice");
             for (Reservation r : result) {
@@ -239,16 +221,11 @@ class UI {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     private void makeBooking() {
         System.out.println("makeBooking()");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
         Scanner s = new Scanner(System.in);
 
         try {
@@ -262,22 +239,16 @@ class UI {
             String endDateTime = s.nextLine();
             System.out.println("Price:");
             double price = s.nextDouble();
-            Reservation reservation = new Reservation(customerId, bikeId, startDateTime, endDateTime, price);
-            new Service(em).makeBooking(reservation);
+            new ServiceWithSQL().makeBooking(customerId, bikeId, startDateTime, endDateTime, price);
             System.out.println("Booking created successfully");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
     private void cancelBooking() {
         System.out.println("cancelBooking");
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
-        EntityManager em = emf.createEntityManager();
         Scanner s = new Scanner(System.in);
 
         try {
@@ -286,9 +257,6 @@ class UI {
             new ServiceWithSQL().cancelBooking(reservationId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        } finally {
-            em.close();
-            emf.close();
         }
     }
 
