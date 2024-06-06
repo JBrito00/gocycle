@@ -1,12 +1,12 @@
 -- Drop existing tables if they exist
-DROP TABLE IF EXISTS Reservations CASCADE;
-DROP TABLE IF EXISTS Bicycles CASCADE;
+DROP TABLE IF EXISTS Reservation CASCADE;
+DROP TABLE IF EXISTS Bicycle CASCADE;
 DROP TABLE IF EXISTS GPS CASCADE;
 DROP TABLE IF EXISTS Customer CASCADE;
-DROP TABLE IF EXISTS Shops CASCADE;
+DROP TABLE IF EXISTS Shop CASCADE;
 
 -- Create Shops table
-CREATE TABLE Shops (
+CREATE TABLE Shop (
     shop_code SERIAL PRIMARY KEY,
     manager VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE Customer (
 );
 
 -- Create Bicycles table
-CREATE TABLE Bicycles (
+CREATE TABLE Bicycle (
     bicycle_id SERIAL PRIMARY KEY,
     id VARCHAR(255) UNIQUE NOT NULL,
     weight DOUBLE PRECISION,
@@ -35,7 +35,7 @@ CREATE TABLE Bicycles (
     gear_system VARCHAR(2) CHECK (gear_system IN ('1', '6', '18', '24')) NOT NULL,
     status VARCHAR(20) CHECK (status IN ('free', 'occupied', 'in reserve', 'under maintenance')) NOT NULL,
     shop_code INT,
-    FOREIGN KEY (shop_code) REFERENCES Shops(shop_code)
+    FOREIGN KEY (shop_code) REFERENCES Shop(shop_code)
 );
 
 -- Create GPS table
@@ -45,17 +45,17 @@ CREATE TABLE GPS (
     longitude DOUBLE PRECISION NOT NULL,
     battery INT NOT NULL,
     bicycle_id INT,
-    FOREIGN KEY (bicycle_id) REFERENCES Bicycles(bicycle_id)
+    FOREIGN KEY (bicycle_id) REFERENCES Bicycle(bicycle_id)
 );
 
 -- Create Reservations table
-CREATE TABLE Reservations (
+CREATE TABLE Reservation (
     reservation_number SERIAL PRIMARY KEY,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
     bicycle_id INT NOT NULL,
     customer_id INT NOT NULL,
     price DOUBLE PRECISION,
-    FOREIGN KEY (bicycle_id) REFERENCES Bicycles(bicycle_id),
+    FOREIGN KEY (bicycle_id) REFERENCES Bicycle(bicycle_id),
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
