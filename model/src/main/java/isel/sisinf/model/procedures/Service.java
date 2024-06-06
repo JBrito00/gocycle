@@ -7,8 +7,6 @@ import isel.sisinf.model.repo.BicycleRepository;
 import isel.sisinf.model.repo.CustomerRepository;
 import isel.sisinf.model.repo.ReservationRepository;
 import jakarta.persistence.EntityManager;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public class Service {
@@ -25,27 +23,27 @@ public class Service {
         this.reservationRepository = new ReservationRepository(em);
     }
 
-    public void createCustomer(Customer customer) throws SQLException{
+    public void createCustomer(Customer customer){
         customerRepository.add(customer);
     }
 
-    public List<Bicycle> listExistingBikes() throws SQLException {
+    public List<Bicycle> listExistingBikes(){
         return bicycleRepository.find("select * from Bicycle", Bicycle.class);
     }
 
-    public Bicycle checkBikeAvailability(int bicycleId) throws SQLException {
+    public Bicycle checkBikeAvailability(int bicycleId){
         return bicycleRepository.findByKey(bicycleId);
     }
 
-    public List<Reservation> obtainBookings() throws SQLException {
+    public List<Reservation> obtainBookings(){
         return reservationRepository.find("select * from Reservation", Reservation.class);
     }
 
-    public void makeBooking(Reservation reservation) throws SQLException {
+    public void makeBooking(Reservation reservation){
         reservationRepository.add(reservation);
     }
 
-    public void cancelBooking(Integer reservationId) throws SQLException {
+    public void cancelBooking(Integer reservationId){
         reservationRepository.delete(reservationId);
     }
 }
