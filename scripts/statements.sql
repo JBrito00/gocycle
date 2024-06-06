@@ -10,7 +10,7 @@ CREATE OR REPLACE PROCEDURE createCustomer(
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    INSERT INTO customer (name, address, email, phone, cc, nationality)
+    INSERT INTO  (name, address, email, phone, cc, nationality)
     VALUES (name, address, email, phone, cc, nationality);
 END;
 $$;
