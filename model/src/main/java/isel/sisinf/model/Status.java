@@ -1,8 +1,8 @@
 package isel.sisinf.model;
 
 public enum Status {
-    Free,
+    FREE,
     OCCUPY,
-    INT_RESERVE,
+    IN_RESERVE,
     UNDER_MAINTENANCE
 }

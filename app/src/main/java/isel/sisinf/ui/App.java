@@ -179,12 +179,8 @@ class UI {
         System.out.println("listExistingBikes()");
 
         try {
-            List<Bicycle> result = new ServiceWithSQL().listExistingBikes();
-            System.out.println("Bicycle List");
-            System.out.println("ID\tModel");
-            for (Bicycle b : result) {
-                System.out.printf("%d\t%s\n", b.getId(), b.getModel());
-            }
+            ServiceWithSQL service = new ServiceWithSQL();
+            service.listExistingBikes();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -196,14 +192,11 @@ class UI {
 
         try {
             System.out.println("Bike ID:");
-            int bikeId = s.nextInt();
-            List<Bicycle> result = new ServiceWithSQL().checkBikeAvailability(bikeId);
-            if (result == null) {
-                System.out.println("Bike not found");
-            } else {
-                Bicycle b = result.get(0);
-                System.out.printf("Bike %d is %s\n", b.getId(), b.getStatus());
-            }
+            int bikeId = Integer.parseInt(s.nextLine());
+            System.out.println("Date (format: YYYY-MM-DD HH:MI:SS):");
+            String date = s.nextLine();
+            ServiceWithSQL service = new ServiceWithSQL();
+            service.checkBikeAvailability(bikeId, date);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -213,12 +206,8 @@ class UI {
         System.out.println("obtainBookings()");
 
         try {
-            List<Reservation> result = new ServiceWithSQL().obtainBookings();
-            System.out.println("Reservation List");
-            System.out.println("ID\tBicycle\tStart\tEnd\tPrice");
-            for (Reservation r : result) {
-                System.out.printf("%d\t%s\t%s\t%s\t%.2f\n", r.getNumber(), r.getBicycle(), r.getBeginingDate(), r.getEndingDate(), r.getPrice());
-            }
+            ServiceWithSQL service = new ServiceWithSQL();
+            service.obtainBookings();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -253,7 +242,7 @@ class UI {
 
         try {
             System.out.println("reservation ID:");
-            int reservationId = s.nextInt();
+            int reservationId = Integer.parseInt(s.nextLine());
             new ServiceWithSQL().cancelBooking(reservationId);
         } catch (Exception e) {
             System.out.println(e.getMessage());

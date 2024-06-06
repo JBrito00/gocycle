@@ -18,7 +18,7 @@ public class Customer implements ICostumer {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "emaill")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "phone")
@@ -30,8 +30,8 @@ public class Customer implements ICostumer {
     @Column(name = "nationality")
     private String nationality;
 
-    @OneToMany(mappedBy = "costumer")
-    private List<Reservation> reservations;
+//    @OneToMany(mappedBy = "costumer")
+//    private List<Reservation> reservations;
 
     public Customer(String name, String address, String email, String phone, String cc, String nationality) {
         this.name = name;

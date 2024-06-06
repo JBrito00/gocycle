@@ -13,10 +13,10 @@ import java.util.List;
 
 public class ServiceWithSQL {
 
-    public void createCustomer(String name, String address, String email, String phone, String CC, String nationality) throws SQLException{
+    public void createCustomer(String name, String address, String email, String phone, String CC, String nationality) throws SQLException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             em.getTransaction().begin();
             Query query = em.createNativeQuery("CALL createCustomer(?1,?2,?3,?4,?5,?6)");
             query.setParameter(1, name);
@@ -27,7 +27,7 @@ public class ServiceWithSQL {
             query.setParameter(6, nationality);
             query.executeUpdate();
             em.getTransaction().commit();
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
             throw e;
@@ -37,14 +37,22 @@ public class ServiceWithSQL {
         }
     }
 
-    public List<Bicycle> listExistingBikes() throws SQLException{
+    public void listExistingBikes() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Query query = em.createNativeQuery("select * from Bicycle");
-            List<Bicycle> result = query.getResultList();
-            return result;
+            String sql = "SELECT b FROM Bicycle b";
+            Query query1 = em.createQuery(sql);
+            List<Bicycle> lr = query1.getResultList();
+            System.out.println("Bicycles:");
+            for (Bicycle b : lr) {
+                System.out.printf("gid = %s ,", b.getId());
+                System.out.printf("weight = %s ,", b.getWeight());
+                System.out.printf("model = %s ,", b.getModel());
+                System.out.printf("brand = %s ,\n", b.getBrand());
+            }
+            em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
@@ -54,16 +62,23 @@ public class ServiceWithSQL {
         }
     }
 
-    public List<Bicycle> checkBikeAvailability(int bicycleId) throws SQLException{
+    public void checkBikeAvailability(int bicycleId, String date) throws SQLException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Query query = em.createNativeQuery("select * from Bicycle where bicycleId = ?1");
+            Query query = em.createNativeQuery(" SELECT checkBikeAvailability(?1, ?2)");
             query.setParameter(1, bicycleId);
-            List<Bicycle> result = query.getResultList();
-            return result;
-        } catch (Exception e){
+            query.setParameter(2, date);
+            List<Boolean> result = query.getResultList();
+            if (result.get(0)) {
+                System.out.println("Bike is available");
+            } else {
+                System.out.println("Bike is not available");
+            }
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
         } finally {
@@ -72,14 +87,24 @@ public class ServiceWithSQL {
         }
     }
 
-    public List<Reservation> obtainBookings() throws SQLException{
+    public void obtainBookings() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Query query = em.createNativeQuery("select * from Reservation");
-            List<Reservation> result = query.getResultList();
-            return result;
+            String sql = "SELECT r FROM Reservation r";
+            Query query1 = em.createQuery(sql);
+            List<Reservation> lr = query1.getResultList();
+            System.out.println("Bookings:");
+            for (Reservation r : lr) {
+                System.out.printf("gid = %s ,", r.getNumber());
+                System.out.printf("starting date = %s ,", r.getBeginingDate());
+                System.out.printf("end date = %s ,", r.getEndingDate());
+                System.out.printf("bike = %s ,", r.getBicycle());
+                System.out.printf("customer = %s, ", r.getCustomer());
+                System.out.printf("price = %s ,\n", r.getPrice());
+            }
+            em.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw e;
@@ -114,12 +139,13 @@ public class ServiceWithSQL {
         }
     }
 
-    public void cancelBooking(int reservationId) throws SQLException {
+    public void cancelBooking(int reservationId) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("gocycle-project");
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            Query query = em.createNativeQuery("CALL cancelBooking(?1)");
+            String sql = "DELETE FROM Reservation r WHERE r.reservationNumber = ?1";
+            Query query = em.createQuery(sql);
             query.setParameter(1, reservationId);
             query.executeUpdate();
             em.getTransaction().commit();

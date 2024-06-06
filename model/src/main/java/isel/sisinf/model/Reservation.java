@@ -2,36 +2,38 @@ package isel.sisinf.model;
 
 import isel.sisinf.model.interfaces.IReservation;
 import jakarta.persistence.*;
-import java.sql.Date;
+
+import java.util.Date;
 
 @Entity
-@NamedQuery(name = "Reservation.findByKey",
-            query = "SELECT r FROM Reservation r WHERE r.reservationNumber =:key")
+@Table(name = "reservation")
+@NamedQuery(name = "Reservation.findAll",
+        query = "SELECT r FROM Bicycle r")
 public class Reservation implements IReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reservationNumber;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "startDate")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "start_date")
     private Date startDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "endDate")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "end_date")
     private Date endDate;
 
-    @MapsId("bicycle_id")
+    @ManyToOne
     @JoinColumn(name = "bicycle_id", nullable = false)
-    private int bicycle;
+    private Bicycle bicycle;
 
-    @MapsId("customer_id")
+    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private int customer;
+    private Customer customer;
 
     @Column(name = "price")
     private double price;
 
-    public Reservation(int customerId, int bikeId, String startDateTime, String endDateTime, double price) {
+    public Reservation(Customer customerId, Bicycle bikeId, String startDateTime, String endDateTime, double price) {
         this.customer = customerId;
         this.bicycle = bikeId;
         this.startDate = new Date(Long.parseLong(startDateTime));
@@ -39,20 +41,50 @@ public class Reservation implements IReservation {
         this.price = price;
     }
 
-    public Reservation() {}
+    public Reservation() {
+    }
 
-    public int getNumber() {return reservationNumber;}
-    public void setNumber(int number) {this.reservationNumber = number;}
+    public int getNumber() {
+        return reservationNumber;
+    }
 
-    public int getBicycle() {return bicycle;}
-    public void setBicycle(int bicycle) {this.bicycle = bicycle;}
+    public void setNumber(int number) {
+        this.reservationNumber = number;
+    }
 
-    public double getPrice() {return price;}
-    public void setPrice(double price) {this.price = price;}
+    public int getBicycle() {
+        return bicycle.getId();
+    }
 
-    public Date getBeginingDate(){return startDate;}
-    public void setBeginingDate(Date beginingDate) {this.startDate = beginingDate;}
+    public void setBicycle(Bicycle bicycle) {
+        this.bicycle = bicycle;
+    }
 
-    public Date getEndingDate(){return endDate;}
-    public void setEndingDate(Date endingDate) {this.endDate = endingDate;}
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getBeginingDate() {
+        return startDate;
+    }
+
+    public void setBeginingDate(Date beginingDate) {
+        this.startDate = beginingDate;
+    }
+
+    public Date getEndingDate() {
+        return endDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endDate = endingDate;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
 }

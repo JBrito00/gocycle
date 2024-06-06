@@ -13,11 +13,11 @@ VALUES
     ('Sarah Taylor', '901 Cedar St', 'sarah.taylor@example.com', '555-1111', '9876-5432-1098-7654', 'Australian');
 
 -- Criar valores de teste para a tabela Bicycle
-INSERT INTO bicycle (id, weight, model, brand, gear_system, status, shop_code)
+INSERT INTO bicycle (bicycleid, weight, model, brand, gearsystem, status, range, maxspeed)
 VALUES
-    ('B004', 28.0, 'Electric Bike', 'Haibike', '6', 'free', 1),
-    ('B005', 30.0, 'Cruiser Bike', 'Electra', '18', 'occupied', 1),
-    ('B006', 26.0, 'Touring Bike', 'Surly', '24', 'in reserve', 2);
+    (1, 28.0, 'Electric Bike', 'Haibike', 'SEIS', 'FREE', 50, 20),
+    (2, 30.0, 'Cruiser Bike', 'Electra', 'DEZOITO', 'OCCUPY', 40, 15),
+    (3, 26.0, 'Touring Bike', 'Surly', 'VINTE_QUATRO', 'IN_RESERVE', 60, 25);
 
 -- Criar valores de teste para a tabela GPS
 INSERT INTO GPS (latitude, longitude, battery, bicycle_id)
