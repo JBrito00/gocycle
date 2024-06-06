@@ -1,6 +1,6 @@
 package isel.sisinf.model;
 
-import isel.sisinf.model.repo.interfaces.IBicycle;
+import isel.sisinf.model.interfaces.IBicycle;
 import jakarta.persistence.*;
 import java.util.List;
 

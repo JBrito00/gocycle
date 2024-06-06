@@ -1,4 +1,4 @@
-package isel.sisinf.model.repo.interfaces;
+package isel.sisinf.model.interfaces;
 
 public interface ICostumer
 {

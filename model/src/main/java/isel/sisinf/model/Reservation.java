@@ -1,6 +1,6 @@
 package isel.sisinf.model;
 
-import isel.sisinf.model.repo.interfaces.IReservation;
+import isel.sisinf.model.interfaces.IReservation;
 import jakarta.persistence.*;
 import java.sql.Date;
 

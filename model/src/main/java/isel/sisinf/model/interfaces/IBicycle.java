@@ -1,4 +1,4 @@
-package isel.sisinf.model.repo.interfaces;
+package isel.sisinf.model.interfaces;
 
 import isel.sisinf.model.GearSystem;
 import isel.sisinf.model.Status;

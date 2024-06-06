@@ -1,6 +1,6 @@
 package isel.sisinf.model;
 
-import isel.sisinf.model.repo.interfaces.IGPS;
+import isel.sisinf.model.interfaces.IGPS;
 import jakarta.persistence.*;
 
 @Entity

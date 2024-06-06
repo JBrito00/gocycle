@@ -1,6 +1,6 @@
 package isel.sisinf.model;
 
-import isel.sisinf.model.repo.interfaces.ICostumer;
+import isel.sisinf.model.interfaces.ICostumer;
 import jakarta.persistence.*;
 import java.util.List;
 
