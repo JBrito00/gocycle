@@ -1,6 +1,6 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.repo;
 
-import isel.sisinf.jpa.genericInterfaces.IRepository;
+import isel.sisinf.model.mappers.GpsDeviceDataMapper;
 import isel.sisinf.model.GpsDevice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -34,5 +34,27 @@ public class GpsDeviceRepository implements IRepository<GpsDevice, List<GpsDevic
             query.setParameter(i, params[i]);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void add(GpsDevice gpsDevice) {
+        GpsDeviceDataMapper g = new GpsDeviceDataMapper();
+        try{
+            g.create(gpsDevice);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Integer gpsId) {
+        GpsDeviceDataMapper g = new GpsDeviceDataMapper();
+        try{
+            g.delete(gpsId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

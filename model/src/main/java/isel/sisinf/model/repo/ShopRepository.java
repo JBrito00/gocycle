@@ -1,6 +1,6 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.repo;
 
-import isel.sisinf.jpa.genericInterfaces.IRepository;
+import isel.sisinf.model.mappers.ShopDataMapper;
 import isel.sisinf.model.Shop;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -33,5 +33,27 @@ public class ShopRepository implements IRepository<Shop, List<Shop>, Integer> {
             query.setParameter(i, params[i]);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void add(Shop shop) {
+        ShopDataMapper s = new ShopDataMapper();
+        try{
+            s.create(shop);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Integer shopId) {
+        ShopDataMapper s = new ShopDataMapper();
+        try{
+            s.delete(shopId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

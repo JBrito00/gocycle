@@ -1,21 +1,21 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.mappers;
 
-import isel.sisinf.jpa.genericInterfaces.IDataMapper;
-import isel.sisinf.model.Customer;
+import isel.sisinf.model.Bicycle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
-public class CustomerDataMapper implements IDataMapper<Customer> {
+public class BicycleDataMapper implements IDataMapper<Bicycle> {
     private EntityManager entityManager;
 
-    public CustomerDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Customers").createEntityManager();
+    public BicycleDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Bicycle").createEntityManager();
     }
 
-    public void create(Customer customer) {
+    public void create(Bicycle bicycle) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(customer);
+            entityManager.persist(bicycle);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -24,10 +24,10 @@ public class CustomerDataMapper implements IDataMapper<Customer> {
         }
     }
 
-    public void update(Customer customer) {
+    public void update(Bicycle bicycle) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(customer);
+            entityManager.merge(bicycle);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -35,12 +35,13 @@ public class CustomerDataMapper implements IDataMapper<Customer> {
             throw e;
         }
     }
-    public void delete(Customer customer) {
+
+    public void delete(int bicycleId) {
         try {
-            Customer c = entityManager.find(Customer.class, customer.getId());
-            if (c != null) {
+            Bicycle b = entityManager.find(Bicycle.class, bicycleId);
+            if (b != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(c);
+                entityManager.remove(b);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {

@@ -1,50 +1,49 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.mappers;
 
-import isel.sisinf.jpa.genericInterfaces.IDataMapper;
-import isel.sisinf.model.Bicycle;
+import isel.sisinf.model.GpsDevice;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class BicycleDataMapper implements IDataMapper<Bicycle> {
+public class GpsDeviceDataMapper implements IDataMapper<GpsDevice> {
     private EntityManager entityManager;
 
-    public BicycleDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Bicycle").createEntityManager();
+    public GpsDeviceDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("GpsSystem").createEntityManager();
     }
 
-    public void create(Bicycle bicycle) {
-        try {
+    public void create(GpsDevice gpsDevice) {
+        try{
             entityManager.getTransaction().begin();
-            entityManager.persist(bicycle);
+            entityManager.persist(gpsDevice);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println(e.getMessage());
             entityManager.getTransaction().rollback();
             throw e;
         }
     }
 
-    public void update(Bicycle bicycle) {
-        try {
+    public void update(GpsDevice gpsDevice) {
+        try{
             entityManager.getTransaction().begin();
-            entityManager.merge(bicycle);
+            entityManager.merge(gpsDevice);
             entityManager.getTransaction().commit();
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println(e.getMessage());
             entityManager.getTransaction().rollback();
             throw e;
         }
     }
 
-    public void delete(Bicycle bicycle) {
+    public void delete(int gpsDeviceId) {
         try {
-            Bicycle b = entityManager.find(Bicycle.class, bicycle.getId());
-            if (b != null) {
+            GpsDevice g = entityManager.find(GpsDevice.class, gpsDeviceId);
+            if(g != null){
                 entityManager.getTransaction().begin();
-                entityManager.remove(b);
+                entityManager.remove(g);
                 entityManager.getTransaction().commit();
             }
-        } catch (Exception e) {
+        } catch(Exception e){
             System.out.println(e.getMessage());
             entityManager.getTransaction().rollback();
             throw e;

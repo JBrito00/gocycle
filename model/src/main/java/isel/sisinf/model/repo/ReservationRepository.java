@@ -1,6 +1,6 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.repo;
 
-import isel.sisinf.jpa.genericInterfaces.IRepository;
+import isel.sisinf.model.mappers.ReservationDataMapper;
 import isel.sisinf.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -34,5 +34,27 @@ public class ReservationRepository implements IRepository<Reservation, List<Rese
             query.setParameter(i, params[i]);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void add(Reservation reservation) {
+        ReservationDataMapper r = new ReservationDataMapper();
+        try{
+            r.create(reservation);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Integer reservationId) {
+        ReservationDataMapper r = new ReservationDataMapper();
+        try{
+            r.delete(reservationId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

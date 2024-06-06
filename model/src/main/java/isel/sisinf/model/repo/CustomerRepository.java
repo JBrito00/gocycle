@@ -1,7 +1,8 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.repo;
 
-import isel.sisinf.jpa.genericInterfaces.IRepository;
+import isel.sisinf.model.mappers.BicycleDataMapper;
 import isel.sisinf.model.Customer;
+import isel.sisinf.model.mappers.CustomerDataMapper;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
@@ -34,5 +35,27 @@ public class CustomerRepository implements IRepository<Customer, List<Customer>,
             query.setParameter(i, params[i]);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void add(Customer customer) {
+        CustomerDataMapper c = new CustomerDataMapper();
+        try{
+            c.create(customer);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Integer customerId) {
+        CustomerDataMapper c = new CustomerDataMapper();
+        try{
+            c.delete(customerId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

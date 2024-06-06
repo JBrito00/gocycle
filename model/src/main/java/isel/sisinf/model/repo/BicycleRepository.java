@@ -1,10 +1,11 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.repo;
 
-import isel.sisinf.jpa.genericInterfaces.IRepository;
+import isel.sisinf.model.mappers.BicycleDataMapper;
 import isel.sisinf.model.Bicycle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
+import java.text.Bidi;
 import java.util.List;
 
 public class BicycleRepository implements IRepository<Bicycle, List<Bicycle>, Integer> {
@@ -34,5 +35,27 @@ public class BicycleRepository implements IRepository<Bicycle, List<Bicycle>, In
             query.setParameter(i, params[i]);
         }
         return query.getResultList();
+    }
+
+    @Override
+    public void add(Bicycle bicycle) {
+        BicycleDataMapper b = new BicycleDataMapper();
+        try{
+            b.create(bicycle);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public void delete(Integer bikeId) {
+        BicycleDataMapper b = new BicycleDataMapper();
+        try{
+            b.delete(bikeId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

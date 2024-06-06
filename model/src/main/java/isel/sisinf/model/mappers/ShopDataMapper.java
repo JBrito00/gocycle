@@ -1,50 +1,48 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.mappers;
 
-import isel.sisinf.jpa.genericInterfaces.IDataMapper;
-import isel.sisinf.model.GpsDevice;
+import isel.sisinf.model.Shop;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class GpsDeviceDataMapper implements IDataMapper<GpsDevice> {
+public class ShopDataMapper implements IDataMapper<Shop> {
     private EntityManager entityManager;
 
-    public GpsDeviceDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("GpsSystem").createEntityManager();
+    public ShopDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Shop").createEntityManager();
     }
 
-    public void create(GpsDevice gpsDevice) {
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.persist(gpsDevice);
-            entityManager.getTransaction().commit();
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
-    }
-
-    public void update(GpsDevice gpsDevice) {
-        try{
-            entityManager.getTransaction().begin();
-            entityManager.merge(gpsDevice);
-            entityManager.getTransaction().commit();
-        } catch(Exception e){
-            System.out.println(e.getMessage());
-            entityManager.getTransaction().rollback();
-            throw e;
-        }
-    }
-
-    public void delete(GpsDevice gpsDevice) {
+    public void create(Shop shop) {
         try {
-            GpsDevice g = entityManager.find(GpsDevice.class, gpsDevice.getNumber());
-            if(g != null){
+            entityManager.getTransaction().begin();
+            entityManager.persist(shop);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            entityManager.getTransaction().rollback();
+            throw e;
+        }
+    }
+
+    public void update(Shop shop) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(shop);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            entityManager.getTransaction().rollback();
+            throw e;
+        }
+    }
+    public void delete(int shopId) {
+        try {
+            Shop s = entityManager.find(Shop.class, shopId);
+            if (s != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(g);
+                entityManager.remove(s);
                 entityManager.getTransaction().commit();
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             entityManager.getTransaction().rollback();
             throw e;

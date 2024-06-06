@@ -25,12 +25,21 @@ public class Reservation implements IReservation {
     private int bicycle;
 
     @MapsId("customer_id")
-    @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    private int customer;
 
     @Column(name = "price")
     private double price;
+
+    public Reservation(int customerId, int bikeId, String startDateTime, String endDateTime, double price) {
+        this.customer = customerId;
+        this.bicycle = bikeId;
+        this.startDate = new Date(Long.parseLong(startDateTime));
+        this.endDate = new Date(Long.parseLong(endDateTime));
+        this.price = price;
+    }
+
+    public Reservation() {}
 
     public int getNumber() {return reservationNumber;}
     public void setNumber(int number) {this.reservationNumber = number;}

@@ -1,6 +1,5 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.mappers;
 
-import isel.sisinf.jpa.genericInterfaces.IDataMapper;
 import isel.sisinf.model.Reservation;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
@@ -35,9 +34,9 @@ public class ReservationDataMapper implements IDataMapper<Reservation> {
             throw e;
         }
     }
-    public void delete(Reservation reservation) {
+    public void delete(int reservationId) {
         try {
-            Reservation r = entityManager.find(Reservation.class, reservation.getNumber());
+            Reservation r = entityManager.find(Reservation.class, reservationId);
             if (r != null) {
                 entityManager.getTransaction().begin();
                 entityManager.remove(r);

@@ -1,21 +1,20 @@
-package isel.sisinf.jpa;
+package isel.sisinf.model.mappers;
 
-import isel.sisinf.jpa.genericInterfaces.IDataMapper;
-import isel.sisinf.model.Shop;
+import isel.sisinf.model.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
-public class ShopDataMapper implements IDataMapper<Shop> {
+public class CustomerDataMapper implements IDataMapper<Customer> {
     private EntityManager entityManager;
 
-    public ShopDataMapper() {
-        this.entityManager = Persistence.createEntityManagerFactory("Shop").createEntityManager();
+    public CustomerDataMapper() {
+        this.entityManager = Persistence.createEntityManagerFactory("Customers").createEntityManager();
     }
 
-    public void create(Shop shop) {
+    public void create(Customer customer) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(shop);
+            entityManager.persist(customer);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -24,10 +23,10 @@ public class ShopDataMapper implements IDataMapper<Shop> {
         }
     }
 
-    public void update(Shop shop) {
+    public void update(Customer customer) {
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(shop);
+            entityManager.merge(customer);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -35,12 +34,14 @@ public class ShopDataMapper implements IDataMapper<Shop> {
             throw e;
         }
     }
-    public void delete(Shop shop) {
+
+
+    public void delete(int customerId) {
         try {
-            Shop s = entityManager.find(Shop.class, shop.getCode());
-            if (s != null) {
+            Customer c = entityManager.find(Customer.class, customerId);
+            if (c != null) {
                 entityManager.getTransaction().begin();
-                entityManager.remove(s);
+                entityManager.remove(c);
                 entityManager.getTransaction().commit();
             }
         } catch (Exception e) {

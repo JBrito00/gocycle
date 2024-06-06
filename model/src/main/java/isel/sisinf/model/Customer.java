@@ -33,6 +33,15 @@ public class Customer implements ICostumer {
     @OneToMany(mappedBy = "costumer")
     private List<Reservation> reservations;
 
+    public Customer(String name, String address, String email, String phone, String cc, String nationality) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.cc = cc;
+        this.nationality = nationality;
+    }
+
     public int getId() {return customerId;}
     public void setId(int id) {this.customerId = id;}
 
